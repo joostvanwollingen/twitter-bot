@@ -6,18 +6,33 @@ var Bot = new TwitterBot({
     access_token: process.env.BOT_ACCESS_TOKEN,
     access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
 });
-var phraseArray = [ "hey twitter",
-    "im tweeting",
-    "tweet tweet",
-    "tweetstorm time... 1/22",
-    "plz RT v important",
-    "delete ur account",
-    "it me",
-    "same",
-    "#dogpants go on 4 legs!!",
-    "#thedress is blue and black" ];
+
+var feed = require("feed-read");
+
+feed("http://dasholzfeller.blogspot.com/feeds/posts/default", function(err, articles) {
+    if (err) throw err;
+    // Each article has the following properties:
+    //
+    //   * "title"     - The article title (String).
+    //   * "author"    - The author's name (String).
+    //   * "link"      - The original article link (String).
+    //   * "content"   - The HTML content of the article (String).
+    //   * "published" - The date that the article was published (Date).
+    //   * "feed"      - {name, source, link}
+    //
+
+    var phrase = chooseRandom(articles);
+    // console.log(phrase + " (" + phrase.length + ")")
+    // console.log(phrase.substring(0,139))
+    Bot.tweet(phrase.substring(0,139));
+});
+
+
 function chooseRandom(myArray) {
-    return myArray[Math.floor(Math.random() * myArray.length)];
+    var index = Math.floor(Math.random() * myArray.length)
+    // console.log("title: " +myArray[index].title)
+    // console.log("content: " +myArray[index].content)
+    return myArray[index].title + (myArray[index].content? ": " + myArray[index].content:"");
 }
-var phrase = chooseRandom(phraseArray) + ", " + chooseRandom(phraseArray);
-Bot.tweet(phrase);
+
+
