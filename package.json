@@ -11,6 +11,7 @@
   "dependencies": {
     "feed-read": "0.0.1",
     "node-twitterbot": "^0.2.2",
+    "striptags": "^3.0.1",
     "twit": "^2.2.9"
   }
 }

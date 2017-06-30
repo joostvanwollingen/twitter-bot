@@ -6,10 +6,11 @@ var Bot = new TwitterBot({
     access_token: process.env.BOT_ACCESS_TOKEN,
     access_token_secret: process.env.BOT_ACCESS_TOKEN_SECRET
 });
-
+var striptags = require('striptags');
 var feed = require("feed-read");
+var feeds = ['http://dikkevanholz.blogspot.nl/feeds/posts/default','http://dasholzfeller.blogspot.com/feeds/posts/default'];
 
-feed("http://dasholzfeller.blogspot.com/feeds/posts/default", function(err, articles) {
+feed(feeds[Math.floor(Math.random() * feeds.length)], function(err, articles) {
     if (err) throw err;
     // Each article has the following properties:
     //
@@ -22,9 +23,9 @@ feed("http://dasholzfeller.blogspot.com/feeds/posts/default", function(err, arti
     //
 
     var phrase = chooseRandom(articles);
-    // console.log(phrase + " (" + phrase.length + ")")
-    // console.log(phrase.substring(0,139))
-    Bot.tweet(phrase.substring(0,139));
+    // console.log(phrase + " (" + phrase.length + ")");
+    // console.log(striptags(phrase.substring(0,139)));
+    Bot.tweet(striptags(phrase.substring(0,139)));
 });
 
 
