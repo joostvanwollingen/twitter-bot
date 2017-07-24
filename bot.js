@@ -8,7 +8,7 @@ var Bot = new TwitterBot({
 });
 var striptags = require('striptags');
 var feed = require("feed-read");
-var feeds = ['http://dikkevanholz.blogspot.nl/feeds/posts/default','http://dasholzfeller.blogspot.com/feeds/posts/default'];
+var feeds = ['http://anyblog.blogspot.nl/feeds/posts/default','http://anotherblog.blogspot.com/feeds/posts/default'];
 
 feed(feeds[Math.floor(Math.random() * feeds.length)], function(err, articles) {
     if (err) throw err;
